@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  jupyter-lab:
+    container_name: jupyter-lab
+    build:
+      context: .
+    ports:
+      - 8889:8888
+    volumes:
+      - jupyter-data:/home/jovyan/work
+      - ${PWD}/backup:/home/jovyan/work
+    command: start-notebook.py --NotebookApp.token='my-token'
+
+volumes:
+  jupyter-data:
+    name: jupyter-data

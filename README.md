@@ -1,6 +1,9 @@
-## This is a project for testing Jupyter Lab
-
----
+## Notes
+- Start the lab
+    - pure Jupyter notebook
+    ```commandline
+    docker compose -f ./config/jupyter/env/local/docker-compose.yaml up -d
+    ```
 
 ## References
 - [Jupyter Lab Documentation](https://jupyterlab.readthedocs.io/en/latest/)

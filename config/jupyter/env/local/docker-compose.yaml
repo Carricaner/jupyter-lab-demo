@@ -3,7 +3,7 @@ services:
   jupyter-lab:
     container_name: jupyter-lab
     build:
-      context: .
+      context: ../../../..
     ports:
       - "8889:8888"
     volumes:

@@ -5,7 +5,7 @@ services:
     build:
       context: .
     ports:
-      - 8889:8888
+      - "8889:8888"
     volumes:
       - jupyter-data:/home/jovyan/work
       - ${PWD}/backup:/home/jovyan/work

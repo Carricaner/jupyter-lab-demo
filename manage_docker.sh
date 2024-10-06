@@ -43,30 +43,13 @@ if [ -z "$ENV" ]; then
   throw_error "No environment provided. Please specify --env='local' or --env='dev'."
 fi
 
-# Define the compose file based on config and env
-PURE_COMPOSE_FILE="./config/jupyter/env/$ENV/docker-compose.yaml"
-SHIOAJI_COMPOSE_FILE="./config/shioaji/env/$ENV/docker-compose.yaml"
-
-# Determine the correct compose file based on config
-case "$CONFIG" in
-pure)
-  COMPOSE_FILE=$PURE_COMPOSE_FILE
-  ;;
-shioaji)
-  COMPOSE_FILE=$SHIOAJI_COMPOSE_FILE
-  ;;
-*)
-  throw_error "Invalid config input. Please specify --config='pure' or --config='shioaji'."
-  ;;
-esac
-
-# Set the Docker service name
-SERVICE_NAME="${CONFIG}-jupyter-lab"
+COMPOSE_FILE="./config/$CONFIG/env/$ENV/docker-compose.yaml"
+DOCKER_SERVICE_NAME="${CONFIG}-jupyter-lab"
 
 # Execute the Docker Compose command based on action
 if [ "$ACTION" = "up" ]; then
   echo "Launching Docker Compose with config: $CONFIG and environment: $ENV"
-  docker compose -f $COMPOSE_FILE up -d
+  docker compose -f "$COMPOSE_FILE" up -d
 
   # If config is 'shioaji', run "jupyter notebook list" inside the container
   if [ "$CONFIG" = "shioaji" ]; then
@@ -75,12 +58,12 @@ if [ "$ACTION" = "up" ]; then
 
     # Run the "jupyter notebook list" command inside the container and print the output
     echo "Fetching Jupyter Notebook list from the shioaji container:"
-    TOKEN=$(docker exec -it "$SERVICE_NAME" jupyter notebook list | sed -n 's/.*token=\([^&]*\).*/\1/p' | cut -d ' ' -f 1)
-    echo "Jupyter Notebook Token: $TOKEN"
+    JUPYTER_TOKEN=$(docker exec -it "$DOCKER_SERVICE_NAME" jupyter notebook list | sed -n 's/.*token=\([^&]*\).*/\1/p' | cut -d ' ' -f 1)
+    echo "Jupyter Notebook Token: $JUPYTER_TOKEN"
   fi
 elif [ "$ACTION" = "down" ]; then
   echo "Shutting down Docker Compose with config: $CONFIG and environment: $ENV"
-  docker compose -f $COMPOSE_FILE down
+  docker compose -f "$COMPOSE_FILE" down
 else
   throw_error "Invalid action. Please specify --action='up' or --action='down'."
 fi

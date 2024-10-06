@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  shioaji-jupyter-lab:
+    platform: linux/amd64
+    container_name: shioaji-jupyter-lab
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8889:8888"
+    volumes:
+      - ${PWD}/backup:/home/work

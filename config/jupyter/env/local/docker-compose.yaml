@@ -1,9 +1,10 @@
 version: "3.9"
 services:
-  jupyter-lab:
-    container_name: jupyter-lab
+  pure-jupyter-lab:
+    container_name: pure-jupyter-lab
     build:
-      context: ../../../..
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8889:8888"
     volumes:

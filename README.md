@@ -1,6 +1,10 @@
 ## Notes
-
 - Start the lab
+    - Overall, run this command
+      ```commandline
+      sh ./manage_docker.sh --config=shioaji --action=up --env=local
+      ```
+      
     - pure Jupyter notebook
       ```commandline
       docker compose -f ./config/jupyter/env/local/docker-compose.yaml up -d
@@ -16,6 +20,10 @@
       ```
       
 - Shut down the lab
+    - Overall, run this command
+      ```commandline
+      sh ./manage_docker.sh --config=shioaji --action=down --env=local
+      ```
     - pure Jupyter notebook
       ```commandline
       docker compose -f ./config/jupyter/env/local/docker-compose.yaml down
